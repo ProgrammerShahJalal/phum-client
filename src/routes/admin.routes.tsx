@@ -3,10 +3,16 @@ import AdminDashboard from "../components/layout/admin/AdminDashboard";
 import CreateAdmin from "../components/layout/admin/CreateAdmin";
 import CreateFaculty from "../components/layout/admin/CreateFaculty";
 import CreateStudent from "../components/layout/admin/CreateStudent";
+import { NavLink } from "react-router-dom";
 
 type TRotue = {
   path: string;
   element: ReactNode;
+};
+type TItems = {
+  key: string;
+  label: ReactNode;
+  children?: TItems[];
 };
 
 const adminPaths = [
@@ -36,6 +42,29 @@ const adminPaths = [
     ],
   },
 ];
+
+export const adminSidebarItems = adminPaths.reduce((acc: TItems[], item) => {
+  if (item.path && item.name) {
+    acc.push({
+      key: item.name,
+      label: <NavLink to={`/admin/${item.path}`}>{item.name}</NavLink>,
+    });
+  }
+
+  if (item.children) {
+    acc.push({
+      key: item.name,
+      label: <NavLink to={`/admin/${item.path}`}>{item.name}</NavLink>,
+      children: item.children.map((child) => ({
+        key: child.name,
+        label: <NavLink to={`/admin/${child.path}`}>{child.name}</NavLink>,
+      })),
+    });
+  }
+
+  return acc;
+}, []);
+
 //===========PROGRAMATIC WAY ===================
 export const adminRoutes = adminPaths.reduce((acc: TRotue[], item) => {
   if (item.path && item.element) {

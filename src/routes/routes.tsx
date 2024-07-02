@@ -4,7 +4,7 @@ import App from "../App";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 
-import { adminRoutes } from "../routes/admin.routes";
+import { adminRoutes } from "./admin.routes";
 
 const router = createBrowserRouter([
   {

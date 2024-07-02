@@ -27,23 +27,45 @@ const adminPaths2 = [
 ];
 
 const newArray = adminPaths2.reduce((acc, item) => {
-  if (item.path && item.element) {
+  if (item.name && item.path) {
     acc.push({
-      path: item.path,
-      element: item.element,
+      key: item.name,
+      level: "navlink",
     });
   }
 
   if (item.children) {
-    item.children.forEach((child) => {
-      acc.push({
-        path: child.path,
-        element: child.element,
-      });
+    acc.push({
+      key: item.name,
+      level: "subnavlink",
+      children: item.children.map((child) => ({
+        key: child.name,
+        level: "navlink",
+      })),
     });
   }
 
   return acc;
 }, []);
+
+// const newArray = adminPaths2.reduce((acc, item) => {
+//   if (item.path && item.element) {
+//     acc.push({
+//       path: item.path,
+//       element: item.element,
+//     });
+//   }
+
+//   if (item.children) {
+//     item.children.forEach((child) => {
+//       acc.push({
+//         path: child.path,
+//         element: child.element,
+//       });
+//     });
+//   }
+
+//   return acc;
+// }, []);
 
 console.log(newArray);
